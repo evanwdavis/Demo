@@ -12,9 +12,8 @@ class APIClient {
     
     typealias ClientCompletion = (_ success: Bool, _ resultObject: AnyObject?) -> ()
     
-    static let apiKey = "70c9a3bd-0460-4fd8-be66-56a65b927804"
-    static let sharedClient = APIClient()
-
+    private static let apiKey = "70c9a3bd-0460-4fd8-be66-56a65b927804"
+    
     private func dataTask(request: NSMutableURLRequest, method: String, completion:@escaping ClientCompletion) {
         request.httpMethod = method
         
@@ -50,8 +49,10 @@ extension APIClient {
     
     typealias ProductCompletion = (_ success: Bool, _ productList: WalMartProductList?) -> ()
     
-    static let pageSize = 15
-    static let productPath = "walmartproducts"
+    private static let pageSize = 15
+    private static let productPath = "walmartproducts"
+    
+    static let sharedClient = APIClient()
     
     func getProducts(onPage page:Int, with completion: @escaping ProductCompletion) {
         let request = self.clientURLRequest(path: APIClient.productPath, params: "\(page)/\(APIClient.pageSize)")
@@ -73,5 +74,3 @@ extension APIClient {
     }
     
 }
-
-///walmartproducts/70c9a3bd-0460-4fd8-be66-56a65b927804/1/50

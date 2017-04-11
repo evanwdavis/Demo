@@ -27,21 +27,23 @@ class WalMartProductManager {
     func fetchNextPage(withCompletion completion:@escaping ProductFetchCompletion) {
         if isFetchingNewPage {
             completion(.currentlyFetching)
-        } else if currentPage == 0 || allProducts.count < totalProducts {
+        } else {//if currentPage == 0 || allProducts.count < totalProducts {
             isFetchingNewPage = true
             APIClient.sharedClient.getProducts(onPage: currentPage + 1, with: { [weak self] (success, productList) in
                 if let productPage = productList, success {
                     self?.addNew(productPage: productPage)
                     self?.currentPage += 1
                     completion(.success)
+                    print("\(self?.totalProducts) \(self?.allProducts.count)")
                 } else {
                     completion(.failure)
                 }
                 self?.isFetchingNewPage = false
             })
-        } else {
-            completion(.maxProducts)
         }
+//        else {
+//            completion(.maxProducts)
+//        }
     }
     
     func addNew(productPage:WalMartProductList) {
