@@ -16,6 +16,9 @@ class MasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
@@ -37,7 +40,9 @@ class MasterViewController: UITableViewController {
 
     func insertNewObject(_ sender: Any) {
         productManager.fetchNextPage { [weak self] (status) in
-            self?.tableView.reloadData()
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
         }
     }
 
@@ -66,10 +71,12 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProductCellIdentifier, for: indexPath) as! ProductTableViewCell
 
         let object = productManager.allProducts[indexPath.row]
-        cell.textLabel!.text = object.productName
+        cell.titleLabel.text = object.productName
+        cell.priceLabel.text = object.price
+        cell.shortDescriptionLabel.text = object.shortDescription
         return cell
     }
 
