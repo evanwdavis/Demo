@@ -20,30 +20,21 @@ class MasterViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        productManager.fetchNextPage(withCompletion: { [weak self] (fetchStatus) in
+            DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+            }
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
         super.viewWillAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    func insertNewObject(_ sender: Any) {
-        productManager.fetchNextPage { [weak self] (status) in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
     }
 
     // MARK: - Segues
@@ -67,17 +58,47 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productManager.allProducts.count
+        return productManager.allProducts.count + 1
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProductCellIdentifier, for: indexPath) as! ProductTableViewCell
-
-        let object = productManager.allProducts[indexPath.row]
-        cell.titleLabel.text = object.productName
-        cell.priceLabel.text = object.price
-        cell.shortDescriptionLabel.text = object.shortDescription
-        return cell
+        if indexPath.row < productManager.allProducts.count {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductCellIdentifier, for: indexPath) as! ProductTableViewCell
+            
+            let object = productManager.allProducts[indexPath.row]
+            cell.titleLabel.text = object.productName
+            cell.priceLabel.text = object.price
+            cell.shortDescriptionLabel.text = object.shortDescription
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: LoadMoreCellIdentifier, for: indexPath) as! LoadMoreTableViewCell
+            if productManager.isFetchingNewPage {
+                cell.setCellState(with: .loading)
+            } else if productManager.canLoadMoreProducts() {
+                cell.setCellState(with: .loadMore)
+            } else {
+                cell.setCellState(with: .showingAll)
+            }
+            return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return productManager.canLoadMoreProducts()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == productManager.allProducts.count {
+            tableView.deselectRow(at: indexPath, animated: false)
+            productManager.fetchNextPage(withCompletion: { [weak self] (fetchStatus) in
+                DispatchQueue.main.async {
+                    if fetchStatus == .success {
+                        self?.tableView.reloadData()
+                    }
+                }
+            })
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 
 }

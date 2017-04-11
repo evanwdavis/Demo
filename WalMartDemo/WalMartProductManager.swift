@@ -17,10 +17,10 @@ class WalMartProductManager {
     typealias ProductFetchCompletion = (WalMartProductFetchStatus) -> ()
 
     var allProducts: [WalMartProduct] = []
-    
+    var isFetchingNewPage: Bool = false
+
     private var totalProducts: Int = 0
     private var currentPage: Int = 0
-    private var isFetchingNewPage: Bool = false
     private var productPages: [WalMartProductList] = []
     
     
@@ -34,7 +34,6 @@ class WalMartProductManager {
                     self?.addNew(productPage: productPage)
                     self?.currentPage += 1
                     completion(.success)
-                    print("\(self?.totalProducts) \(self?.allProducts.count)")
                 } else {
                     completion(.failure)
                 }
@@ -49,6 +48,10 @@ class WalMartProductManager {
         totalProducts = productPage.totalProducts
         productPages.append(productPage)
         allProducts.append(contentsOf: productPage.products)
+    }
+    
+    func canLoadMoreProducts() -> Bool {
+        return allProducts.count < totalProducts
     }
     
 }

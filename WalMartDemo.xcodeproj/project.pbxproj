@@ -12,6 +12,10 @@
 		077396BD1E9C8F9100368907 /* WalMartProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396BC1E9C8F9100368907 /* WalMartProductList.swift */; };
 		077396BF1E9C94F000368907 /* WalMartProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396BE1E9C94F000368907 /* WalMartProductManager.swift */; };
 		077396C11E9CA54A00368907 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396C01E9CA54A00368907 /* ProductTableViewCell.swift */; };
+		077396C31E9CBE0000368907 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396C21E9CBE0000368907 /* Extensions.swift */; };
+		077396C51E9D44CB00368907 /* LoadMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396C41E9D44CB00368907 /* LoadMoreTableViewCell.swift */; };
+		077396C71E9D4CA400368907 /* InStockStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396C61E9D4CA400368907 /* InStockStatusTableViewCell.swift */; };
+		077396C91E9D4CB400368907 /* ProductInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077396C81E9D4CB400368907 /* ProductInfoTableViewCell.swift */; };
 		07CE8CCB1E810F1D005237CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CE8CCA1E810F1D005237CC /* AppDelegate.swift */; };
 		07CE8CCD1E810F1D005237CC /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CE8CCC1E810F1D005237CC /* MasterViewController.swift */; };
 		07CE8CCF1E810F1D005237CC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CE8CCE1E810F1D005237CC /* DetailViewController.swift */; };
@@ -26,6 +30,10 @@
 		077396BC1E9C8F9100368907 /* WalMartProductList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalMartProductList.swift; sourceTree = "<group>"; };
 		077396BE1E9C94F000368907 /* WalMartProductManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalMartProductManager.swift; sourceTree = "<group>"; };
 		077396C01E9CA54A00368907 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		077396C21E9CBE0000368907 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		077396C41E9D44CB00368907 /* LoadMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMoreTableViewCell.swift; sourceTree = "<group>"; };
+		077396C61E9D4CA400368907 /* InStockStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InStockStatusTableViewCell.swift; sourceTree = "<group>"; };
+		077396C81E9D4CB400368907 /* ProductInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoTableViewCell.swift; sourceTree = "<group>"; };
 		07CE8CC71E810F1D005237CC /* WalMartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalMartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07CE8CCA1E810F1D005237CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07CE8CCC1E810F1D005237CC /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +79,10 @@
 				07CE8CCE1E810F1D005237CC /* DetailViewController.swift */,
 				07CE8CD01E810F1D005237CC /* Main.storyboard */,
 				077396C01E9CA54A00368907 /* ProductTableViewCell.swift */,
+				077396C41E9D44CB00368907 /* LoadMoreTableViewCell.swift */,
+				077396C61E9D4CA400368907 /* InStockStatusTableViewCell.swift */,
+				077396C81E9D4CB400368907 /* ProductInfoTableViewCell.swift */,
+				077396C21E9CBE0000368907 /* Extensions.swift */,
 				07CE8CD31E810F1D005237CC /* Assets.xcassets */,
 				07CE8CD51E810F1D005237CC /* LaunchScreen.storyboard */,
 				07CE8CD81E810F1D005237CC /* Info.plist */,
@@ -156,11 +168,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				07CE8CCF1E810F1D005237CC /* DetailViewController.swift in Sources */,
+				077396C71E9D4CA400368907 /* InStockStatusTableViewCell.swift in Sources */,
+				077396C31E9CBE0000368907 /* Extensions.swift in Sources */,
+				077396C51E9D44CB00368907 /* LoadMoreTableViewCell.swift in Sources */,
 				077396C11E9CA54A00368907 /* ProductTableViewCell.swift in Sources */,
 				07CE8CCD1E810F1D005237CC /* MasterViewController.swift in Sources */,
 				077396BB1E9C8A9E00368907 /* WalMartProduct.swift in Sources */,
 				07CE8CCB1E810F1D005237CC /* AppDelegate.swift in Sources */,
 				077396BD1E9C8F9100368907 /* WalMartProductList.swift in Sources */,
+				077396C91E9D4CB400368907 /* ProductInfoTableViewCell.swift in Sources */,
 				077396BF1E9C94F000368907 /* WalMartProductManager.swift in Sources */,
 				077396B91E99A15F00368907 /* APIClient.swift in Sources */,
 			);

@@ -22,20 +22,13 @@ struct WalMartProduct {
     
     init(withDictionary dictionary:[String : AnyObject]) {
         productId = dictionary["productId"] as? String ?? ""
-        productName = WalMartProduct.stripHTML(from: dictionary["productName"] as? String ?? "")
-        shortDescription = WalMartProduct.stripHTML(from: dictionary["shortDescription"] as? String ?? "")
-        longDescription = WalMartProduct.stripHTML(from: dictionary["longDescription"] as? String ?? "")
+        productName = (dictionary["productName"] as? String)?.stringByRemovingHTML() ?? ""
+        shortDescription = (dictionary["shortDescription"] as? String)?.stringByRemovingHTML() ?? ""
+        longDescription = (dictionary["longDescription"] as? String)?.stringByRemovingHTML() ?? ""
         price = dictionary["price"] as? String ?? ""
         productImageURL = dictionary["productImageURL"] as? String ?? ""
         reviewRating = dictionary["reviewRating"] as? Double ?? 0.0
         reviewCount = dictionary["reviewCount"] as? Int ?? 0
         inStock = dictionary["inStock"] as? Bool ?? false
-    }
-    
-    static func stripHTML(from string:String) -> String {
-        let htmlStringData = string.data(using: String.Encoding.utf8)!
-        let options: [String: AnyObject] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType as AnyObject, NSCharacterEncodingDocumentAttribute: NSNumber(value:String.Encoding.utf8.rawValue)]
-        let attributedHTMLString = try! NSAttributedString(data: htmlStringData, options: options, documentAttributes: nil)
-        return attributedHTMLString.string
     }
 }
