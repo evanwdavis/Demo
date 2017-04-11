@@ -84,12 +84,11 @@ class MasterViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return productManager.canLoadMoreProducts()
+        return indexPath.row < productManager.allProducts.count
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == productManager.allProducts.count {
-            tableView.deselectRow(at: indexPath, animated: false)
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y + scrollView.bounds.height) > (scrollView.contentSize.height - 100) && !productManager.isFetchingNewPage && productManager.canLoadMoreProducts() {
             productManager.fetchNextPage(withCompletion: { [weak self] (fetchStatus) in
                 DispatchQueue.main.async {
                     if fetchStatus == .success {
@@ -97,7 +96,7 @@ class MasterViewController: UITableViewController {
                     }
                 }
             })
-            tableView.reloadRows(at: [indexPath], with: .none)
+            tableView.reloadRows(at: [IndexPath(row: productManager.allProducts.count, section: 0)], with: .none)
         }
     }
 
