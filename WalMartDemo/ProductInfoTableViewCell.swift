@@ -8,17 +8,20 @@
 
 import UIKit
 
+let ProductInfoCellIdentifier = "ProductInfoTableViewCell"
+
 class ProductInfoTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBOutlet weak var priceLabel:UILabel!
+    @IBOutlet weak var ratingLabel:UILabel!
+    @IBOutlet weak var reviewCountLabel:UILabel!
+    @IBOutlet weak var descriptionLabel:UILabel!
+    
+    func setInfo(with product:WalMartProduct) {
+        priceLabel.text = product.price
+        ratingLabel.text = String(format: "%.1f", product.reviewRating)
+        reviewCountLabel.text = "\(product.reviewCount)"
+        descriptionLabel.text = product.longDescription
     }
 
 }

@@ -8,36 +8,53 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
-
-
-    func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = detail.productName
-            }
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
+    var product:WalMartProduct?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.configureView()
+
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        tableView.reloadData()
+//    }
+    
+    //MARK: TableView
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return product != nil ? 3 : 0
     }
-
-    var detailItem: WalMartProduct? {
-        didSet {
-            // Update the view.
-            self.configureView()
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let product = product {
+            switch indexPath.row {
+            case 0:
+                let cell = tableView.dequeueReusableCell(withIdentifier: InStockStatusCellIdentifier) as! InStockStatusTableViewCell
+                cell.setStockStatus(with: product.inStock ? .inStock : .outOfStock)
+                return cell
+            case 1:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ProductNameCellIdentifier) as! ProductNameTableViewCell
+                cell.nameLabel.text = product.productName
+                return cell
+            case 2:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ProductInfoCellIdentifier) as! ProductInfoTableViewCell
+                cell.setInfo(with: product)
+                return cell
+            default:
+                break
+            }
         }
+        return UITableViewCell()
     }
 
 
